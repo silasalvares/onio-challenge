@@ -5,6 +5,7 @@ from mongoengine import connect
 
 from selling_app.modules.products import products_service
 from selling_app.modules.clients import clients_service
+from selling_app.modules.selling import selling_service
 
 
 def test_when_new_product__id_is_set():
@@ -23,4 +24,9 @@ def test_when_client_requested__data_are_returned():
     assert type(client.id) == ObjectId
 
 def test_when_new_selling__data_are_returned():
-    assert 1 == 2
+    client = clients_service.get_client('00000000191')
+    selling_data = {'client': client.id, 'value': 10.0}
+    new_selling = selling_service.register_selling(selling_data)
+    assert type(new_selling.id) == ObjectId
+    assert new_selling.client.name == 'First Client'
+    assert new_selling.value == Decimal('10')

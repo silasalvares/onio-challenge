@@ -22,6 +22,7 @@ def test_when_client_requested__data_are_returned():
     client = clients_service.get_client('00000000191')
     assert client.name == 'First Client'
     assert type(client.id) == ObjectId
+    assert client.loyality_balance == Decimal('0')
 
 def test_when_new_selling__data_are_returned():
     client = clients_service.get_client('00000000191')

@@ -11,8 +11,11 @@ def on_message(channel, method_frame, header_frame, body):
         print(res)
     except (Exception):
         print('Erro')
-    
-connection = pika.BlockingConnection()
+
+parameters = pika.ConnectionParameters(
+    host='172.20.0.2')    
+connection = pika.BlockingConnection(parameters)
+print(connection.is_open)
 channel = connection.channel()
 channel.queue_declare('test')
 channel.basic_consume(queue='test', on_message_callback=on_message)

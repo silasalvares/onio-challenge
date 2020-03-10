@@ -3,10 +3,11 @@ from bson import ObjectId
 from decimal import Decimal
 from mongoengine import connect
 
-from selling_app.modules.products import products_service
-from selling_app.modules.clients import clients_service
-from selling_app.modules.selling import selling_service
+from app.modules.products import products_service
+from app.modules.clients import clients_service
+from app.modules.selling import selling_service
 
+connect('mongoenginetest', host='mongomock://localhost')
 
 def test_when_new_product__id_is_set():
     product_data = {'name': 'Product 1', 'description': 'First Product', 'price': 10.0}

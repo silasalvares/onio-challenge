@@ -1,0 +1,29 @@
+version: '3.1'
+
+services:
+  selling-microservice:
+    image: selling-service
+    build: ./selling_service
+    networks:
+      - custom 
+    ports:
+      - 5000:5000
+
+  rabbitmq-worker:
+    image: rabbitmq-worker
+    build: ./rabbitmq-worker
+    networks:
+      - custom
+    depends_on:
+      - rabbitmq
+
+  rabbitmq:
+    image: rabbitmq:3
+    networks:
+      - custom 
+    ports: 
+      - 5672:5672
+
+networks:
+  custom:
+    driver: bridge

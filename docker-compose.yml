@@ -9,6 +9,14 @@ services:
     ports:
       - 5000:5000
 
+  loyality-microservice:
+    image: loyality-service
+    build: ./lotality_service 
+    networks:
+      - custom
+    ports:
+      - 5001:5001
+
   rabbitmq-worker:
     image: rabbitmq-worker
     build: ./rabbitmq-worker

@@ -1,7 +1,7 @@
 import pytest
 from bson import ObjectId
 from decimal import Decimal
-from mongoengine import connect
+from mongoengine import connect, disconnect
 
 from app.modules.products import products_service
 from app.modules.clients import clients_service
@@ -26,9 +26,9 @@ def test_when_client_requested__data_are_returned():
     assert client.loyality_balance == Decimal('0')
 
 def test_when_new_selling__data_are_returned():
-    client = clients_service.get_client('00000000191')
-    selling_data = {'client': client.id, 'value': 10.0}
+    selling_data = {'client_cpf': '00000000191', 'value': 10.0}
     new_selling = selling_service.register_selling(selling_data)
     assert type(new_selling.id) == ObjectId
     assert new_selling.client.name == 'First Client'
     assert new_selling.value == Decimal('10')
+

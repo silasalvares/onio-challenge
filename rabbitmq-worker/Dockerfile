@@ -4,8 +4,12 @@ WORKDIR /app
 
 ADD . /app
 
+RUN apk add --no-cache git
+
 RUN pip install -r requirements.txt
 
-ENV NAME worker
+EXPOSE 5000
 
-CMD ["python", "rabbitmq_worker.py"]
+ENV NAME loyality-service
+
+CMD ["python", "run.py"]

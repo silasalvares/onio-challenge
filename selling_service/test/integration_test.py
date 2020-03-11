@@ -1,6 +1,7 @@
 import pytest
 from decimal import Decimal
 from mongoengine import connect
+from pytest_rabbitmq import factories
 
 from app import app
 
@@ -52,24 +53,3 @@ def test_when_new_selling__data_is_returned(client):
     selling_data = response.json.get('data')
     assert type(selling_data['id']) == str
     assert selling_data['value'] == Decimal('10')
-
-def test_when_new_selling__loyality_balance_is_updated(client):
-    response = client.post('/clients/', json={
-        'cpf': '01483535509',
-        'name': 'Second Client'
-    })
-    assert response.status_code == 200
-    client_data = response.json.get('data')
-    assert client_data['loyality_balance'] == Decimal('0')
-    
-    response = client.post('/selling/', json={
-        'client_cpf': '01483535509',
-        'value': 10.0
-    })
-
-    assert response.status_code == 200
-
-    response = client.get('/clients/?cpf=01483535509')
-    assert response.status_code == 200
-    updated_client_data = response.json.get('data')
-    assert updated_client_data['loyality_balance'] == Decimal('20')

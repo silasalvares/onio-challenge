@@ -4,10 +4,48 @@ services:
   selling-service:
     image: selling-service
     build: ./selling_service
+    networks:
+      - selling_network
     ports:
       - 5000:5000
+    depends_on:
+      - mongo  
+  
+  loyality-service:
+    image: loyality-service
+    build: ./loyality_service
+    networks:
+      - selling_network
+    ports:
+      - 5001:5001
+    depends_on:
+      - mongo     
+
+  rabbitmq-workers:
+    image: rabbitmq-workers
+    build: ./rabbitmq_workers
+    networks:
+      - selling_network
+    depends_on:
+      - rabbitmq
 
   mongo:
     image: mongo
+    container_name: mongo-server
+    networks:
+      - selling_network
     ports: 
       - 27017:27017
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq-server
+    networks: 
+      - selling_network
+    ports:
+      - 5672:5672
+      - 15672:15672
+
+networks:
+  selling_network:
+    driver: bridge

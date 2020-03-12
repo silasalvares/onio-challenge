@@ -1,3 +1,4 @@
+import time
 import pika
 import requests
 
@@ -6,7 +7,7 @@ def on_message(channel, method_frame, header_frame, body):
         'message': body}
     
     try:
-        res = requests.get('http://localhost:5001/')
+        res = requests.get('http://loyality-service:5001/')
         print(res)
         #print(str(message['message']))
         pass
@@ -15,10 +16,26 @@ def on_message(channel, method_frame, header_frame, body):
 
 credentials = pika.PlainCredentials('guest', 'guest')
 parameters = pika.ConnectionParameters(
-    host='localhost', credentials=credentials)    
-connection = pika.BlockingConnection(parameters)
+    host='rabbitmq-server', credentials=credentials)    
+
+connection = None
+
+try:
+    connection = pika.BlockingConnection(parameters)
+except:
+    connection  = None
+
+while not connection:
+    print('Trying RabbitMQ connection...')
+    time.sleep(10)
+    try:
+        connection = pika.BlockingConnection(parameters)
+    except:
+        connection = None
+
 channel = connection.channel()
-channel.basic_consume(queue='test', on_message_callback=on_message)
+channel.queue_declare('credits')
+channel.basic_consume(queue='credits', on_message_callback=on_message)
 
 try:
     channel.start_consuming()

@@ -6,8 +6,6 @@ ADD . /app
 
 RUN pip install -r requirements.txt
 
-EXPOSE 5001
+ENV NAME rabbitmq-workers
 
-ENV NAME loyality-service
-
-CMD ["python", "run.py"]
+CMD ["python", "credit_worker.py"]

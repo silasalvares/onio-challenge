@@ -1,10 +1,16 @@
-import { Selling } from '../models/selling.model';
+import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
+@Injectable()
 export class SellingService {
 
-    constructor() {}
+    apiUrl:String;
 
-    public registerSelling(selling: Selling) {
+    constructor() {
+        this.apiUrl = environment.urlSellingApi;
+    }
 
+    registerSelling() {
+        
     }
 }

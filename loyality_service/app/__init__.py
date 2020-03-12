@@ -1,10 +1,6 @@
 from flask import Flask 
-from flask_restx import Api
 
 app = Flask(__name__)
-api = Api(app)
 
-@app.route('/event')
-def receive_event():
-    print('Event Received!')
-    return ''
+from app.modules.loyality.loyality_api import loyality as loyality_module
+app.register_blueprint(loyality_module)

@@ -1,7 +1,6 @@
 import pytest
 from decimal import Decimal
 from mongoengine import connect
-from pytest_rabbitmq import factories
 
 from app import app
 

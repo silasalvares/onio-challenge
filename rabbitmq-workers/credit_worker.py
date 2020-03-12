@@ -4,20 +4,20 @@ import requests
 def on_message(channel, method_frame, header_frame, body):
     message = {'delivery_tag': method_frame.delivery_tag,
         'message': body}
-
+    
     try:
-        print(message)
-        res = requests.get('http://localhost:5001/event')
+        res = requests.get('http://localhost:5001/')
         print(res)
+        #print(str(message['message']))
+        pass
     except (Exception):
         print('Erro')
 
+credentials = pika.PlainCredentials('guest', 'guest')
 parameters = pika.ConnectionParameters(
-    host='172.20.0.2')    
+    host='localhost', credentials=credentials)    
 connection = pika.BlockingConnection(parameters)
-print(connection.is_open)
 channel = connection.channel()
-channel.queue_declare('test')
 channel.basic_consume(queue='test', on_message_callback=on_message)
 
 try:

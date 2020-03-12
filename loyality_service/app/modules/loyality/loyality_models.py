@@ -4,17 +4,10 @@ from decimal import Decimal
 
 
 class User(me.Document):
-    cpf = me.StringField(required=True)
-    name = me.StringField(required=True)
+    cpf = me.StringField(required=True, unique=True)
     balance = me.DecimalField(required=True, default=Decimal(0))
 
-
-# class EntryType(Enum):
-#     D = 'Débito'
-#     C = 'Crédito'
-
 class Entry(me.Document):
-    #entry_type = eme.StringEnumField(EntryTypeEnum, required=True)
     date = me.DateTimeField(required=True)
     value = me.DecimalField(required=True)
     user = me.ReferenceField(User)

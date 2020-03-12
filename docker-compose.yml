@@ -1,37 +1,13 @@
 version: '3.1'
 
 services:
-  selling-microservice:
+  selling-service:
     image: selling-service
     build: ./selling_service
-    networks:
-      - custom 
     ports:
       - 5000:5000
 
-  loyality-microservice:
-    image: loyality-service
-    build: ./lotality_service 
-    networks:
-      - custom
-    ports:
-      - 5001:5001
-
-  rabbitmq-worker:
-    image: rabbitmq-worker
-    build: ./rabbitmq-worker
-    networks:
-      - custom
-    depends_on:
-      - rabbitmq
-
-  rabbitmq:
-    image: rabbitmq:3
-    networks:
-      - custom 
+  mongo:
+    image: mongo
     ports: 
-      - 5672:5672
-
-networks:
-  custom:
-    driver: bridge
+      - 27017:27017

@@ -1,12 +1,14 @@
-import marshmallow as ma
+import marshmallow as msh
 
-class NewEntrySchema():
-    user_id = ma.fields.String()
-    entry_type = ma.fields.String()
-    value = ma.fields.Decimal()
+class UserSchema(msh.Schema):
+    cpf = msh.fields.Str()
+    balance = msh.fields.Decimal()
 
-class EntrySchema():
-    user_id = ma.fields.String()
-    entry_type = ma.fields.String()
-    date = ma.fields.DateTime()
-    value = ma.fields.Decimal()
+class NewEntrySchema(msh.Schema):
+    cpf = msh.fields.String()
+    value = msh.fields.Decimal()
+
+class EntrySchema(msh.Schema):
+    user = msh.fields.Nested(UserSchema)
+    date = msh.fields.DateTime()
+    value = msh.fields.Decimal()

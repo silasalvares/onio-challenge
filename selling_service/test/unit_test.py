@@ -2,18 +2,12 @@ import pytest
 from bson import ObjectId
 from decimal import Decimal
 from mongoengine import connect, disconnect
-from pytest_rabbitmq import factories
 
 from app.modules.products import products_service
 from app.modules.clients import clients_service
 from app.modules.selling import selling_service
 
 connect('mongoenginetest', host='mongomock://localhost')
-
-rabbitmq_my_proc = factories.rabbitmq_proc(
-    host='localhost'
-)
-rabbitmq_my = factories.rabbitmq('rabbitmq_my_proc')
 
 def test_when_new_product__id_is_set():
     product_data = {'name': 'Product 1', 'description': 'First Product', 'price': 10.0}

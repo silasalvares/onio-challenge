@@ -1,3 +1,5 @@
+from mongoengine import connect, disconnect
 from app import app
 
-app.run(debug=True, port=5001)
+connect = ('loyality-service')
+app.run(host='0.0.0.0', port=5001)

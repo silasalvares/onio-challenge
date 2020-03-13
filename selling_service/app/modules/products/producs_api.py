@@ -8,18 +8,10 @@ from app.modules.products.products_schemas import NewProductSchema, ProductSchem
 
 products = Blueprint('products', __name__, url_prefix='/products')
 
-@products.route('/')
-class ProductsApi(Resource):
-    @validate_schema(NewProductSchema())
-    def post(self, schema_data):
-        new_product = products_service.create_product(schema_data)
-        return JsonResponse(data=ProductSchema().dump(new_product)).jsonify()
+products = Blueprint('products', __name__, url_prefix='/products')
 
-
-# products = Blueprint('products', __name__, url_prefix='/products')
-
-# @products.route('/', methods=['POST'])
-# @validate_schema(NewProductSchema())
-# def create_product(schema_data):
-#     new_product = products_service.create_product(schema_data)
-#     return JsonResponse(data=ProductSchema().dump(new_product)).jsonify()
+@products.route('/', methods=['POST'])
+@validate_schema(NewProductSchema())
+def create_product(schema_data):
+    new_product = products_service.create_product(schema_data)
+    return JsonResponse(data=ProductSchema().dump(new_product)).jsonify()

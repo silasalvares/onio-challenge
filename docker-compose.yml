@@ -29,6 +29,14 @@ services:
     depends_on:
       - rabbitmq
 
+  selling-web:
+    image: selling-web
+    build: ./selling-web
+    networks:
+      - selling_network
+    ports:
+      - 4200:4200
+
   mongo:
     image: mongo
     container_name: mongo-server

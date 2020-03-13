@@ -1,16 +1,11 @@
 import time
+import json
 import pika
 import requests
 
 def on_message(channel, method_frame, header_frame, body):
-    message = {'delivery_tag': method_frame.delivery_tag,
-        'message': body}
-    
     try:
-        res = requests.get('http://loyality-service:5001/')
-        print(res)
-        #print(str(message['message']))
-        pass
+        res = requests.post('http://loyality-service:5001/', data=json.dumps(body))
     except (Exception):
         print('Erro')
 

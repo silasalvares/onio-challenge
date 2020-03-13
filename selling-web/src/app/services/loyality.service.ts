@@ -4,18 +4,18 @@ import { environment } from 'src/environments/environment';
 import { Selling } from '../models/selling.model';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../models/api-response.model';
+import { UserBalance } from '../models/user-balance.model';
 
 @Injectable()
-export class SellingService {
+export class LoyalityService {
 
     apiUrl:String;
 
     constructor(private http: HttpClient) {
-        this.apiUrl = environment.urlSellingApi + '/selling';
+        this.apiUrl = environment.urlLoyalityApi + '/';
     }
 
-    registerSelling(selling: Selling): Observable<ApiResponse<Selling>> {
-        console.log(this.apiUrl);
-        return this.http.post<ApiResponse<Selling>>(this.apiUrl + '/', selling);
+    getBalance(cpf: string): Observable<ApiResponse<UserBalance>> {
+        return this.http.get<ApiResponse<UserBalance>>(this.apiUrl + '/?cpf=' + cpf);
     }
 }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SellingService } from './services/selling.service';
+import { Selling } from './models/selling.model';
 
 @Component({
 	selector: 'app-root',
@@ -9,11 +10,9 @@ import { SellingService } from './services/selling.service';
 export class AppComponent {
 	title = 'selling-web';
 
-	constructor(
-			private sellingService: SellingService
-		) {}
+	selling: Selling = new Selling();
 
-	newSelling() {
-		console.log('New Selling');
-	}
+	constructor() {}
+
+	
 }

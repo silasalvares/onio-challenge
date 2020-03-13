@@ -42,4 +42,7 @@ def debt(debt_data):
     return entry
 
 def get_score(user_cpf):
-    return User.objects(cpf=user_cpf).get()
+    try:
+        return User.objects(cpf=user_cpf).get()
+    except:
+        return None

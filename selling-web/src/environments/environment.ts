@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   urlSellingApi: "http://selling-service:5000",
-  urlLoyalityApi: "http://loyality-service:5000"
+  urlLoyalityApi: "http://loyality-service:5001"
 };
 
 /*
